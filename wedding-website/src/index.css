@@ -1,0 +1,156 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', system-ui, sans-serif;
+  --font-script: 'Great Vibes', cursive;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  background-color: var(--wedding-bg, #faf7f4);
+  color: var(--wedding-text, #3d2b2b);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.section-padding {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.wedding-container {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .wedding-container {
+    max-width: 520px;
+  }
+}
+
+.section-label {
+  letter-spacing: 0.35em;
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.decorative-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--wedding-accent, #8b2942) 20%,
+    var(--wedding-accent, #8b2942) 80%,
+    transparent
+  );
+  opacity: 0.4;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--ring-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--ring-rotate, 0deg));
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.animate-float-slow {
+  --ring-rotate: 0deg;
+  animation: float-gentle 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  --ring-rotate: 12deg;
+  animation: float-gentle 6.5s ease-in-out 1s infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+.animate-sparkle-delayed {
+  animation: sparkle 3.5s ease-in-out 1.5s infinite;
+}
+
+.animate-ring-glow {
+  animation: pulse-soft 3s ease-in-out infinite;
+}

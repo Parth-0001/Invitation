@@ -1,0 +1,131 @@
+{
+  "slug": "parth-janvi",
+  "theme": {
+    "primaryColor": "#8b2942",
+    "secondaryColor": "#d4a574",
+    "accentColor": "#8b2942",
+    "backgroundColor": "#faf7f4",
+    "textColor": "#3d2b2b",
+    "headingFont": "Cormorant Garamond",
+    "bodyFont": "Montserrat",
+    "scriptFont": "Great Vibes",
+    "borderStyle": "floral"
+  },
+  "sharePage": {
+    "headline": "You're Invited",
+    "subheadline": "Save the Date",
+    "message": "An engagement celebration awaits you.\nWe would be honoured by your presence.",
+    "buttonText": "Click Here for the Invitation",
+    "hint": "Tap below to view the full invitation"
+  },
+  "heroDecoration": "engagement",
+  "sectionLabels": {
+    "eventsSubtitle": "Save the Date",
+    "eventsTitle": "Engagement Events",
+    "coupleSubtitle": "Introducing",
+    "coupleTitle": "The Couple",
+    "groomRole": "The Groom-to-be",
+    "brideRole": "The Bride-to-be"
+  },
+  "couple": {
+    "displayNames": "Parth & Janvi",
+    "groom": {
+      "name": "Parth",
+      "photo": "/photos/groom.jpg",
+      "description": "Filled with joy as we begin this beautiful journey together",
+      "parentLabel": "Son of",
+      "parents": ["Kanubhai J Prajapati", "Ramilaben K Prajapati"]
+    },
+    "bride": {
+      "name": "Janvi",
+      "photo": "/photos/bride.jpg",
+      "description": "Radiant with happiness on this special occasion",
+      "parentLabel": "Daughter of",
+      "parents": ["Nareshbhai K Prajapati", "Ritaben N Prajapati"]
+    }
+  },
+  "wedding": {
+    "dateTime": "2026-11-14T17:00:00",
+    "heroMessage": "WITH IMMENSE JOY AND LOVE",
+    "scratchRevealLabel": "SCRATCH TO REVEAL THE DATE",
+    "scratchRevealContent": {
+      "label": "Engagement Date",
+      "value": "14 November 2026"
+    },
+    "countdownCompleteMessage": "The engagement celebration has begun ❤️"
+  },
+  "events": [
+    {
+      "id": "engagement-ceremony",
+      "name": "Engagement Ceremony",
+      "date": "14 November 2026",
+      "time": "5:00 PM onwards",
+      "venue": "Umiya Garden Party Plot",
+      "description": "We begin our engagement with the sacred blessings of our elders and the warmth of our loved ones gathered around us.",
+      "image": "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=400&fit=crop",
+      "latitude": 23.6884671,
+      "longitude": 72.5520895,
+      "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
+    },
+    {
+      "id": "ring-exchange",
+      "name": "Ring Exchange & Blessings",
+      "date": "14 November 2026",
+      "time": "7:00 PM onwards",
+      "venue": "Umiya Garden Party Plot",
+      "description": "With hearts full of promise, we exchange rings — a timeless symbol of our commitment and the journey we begin together.",
+      "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=400&fit=crop",
+      "latitude": 23.6884671,
+      "longitude": 72.5520895,
+      "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
+    },
+    {
+      "id": "engagement-dinner",
+      "name": "Engagement Dinner",
+      "date": "14 November 2026",
+      "time": "7:00 PM onwards",
+      "venue": "Umiya Garden Party Plot",
+      "description": "Join us for a delightful dinner as we celebrate this cherished occasion surrounded by the love of family and friends.",
+      "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=400&fit=crop",
+      "latitude": 23.6884671,
+      "longitude": 72.5520895,
+      "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
+    }
+  ],
+  "gallery": {
+    "photos": [],
+    "videos": []
+  },
+  "music": {
+    "sectionHeading": "Music that feels like us",
+    "title": "Chaand Baliya",
+    "artist": "Aditya A",
+    "audioUrl": "/music/chaand-baliya.mp3",
+    "coverImage": "https://images.unsplash.com/photo-1532767153582-b2a127ee635b?w=200&h=200&fit=crop"
+  },
+  "invitationMessage": {
+    "heading": "Awaiting Your Noble Presence",
+    "scriptHeading": "Because your blessings",
+    "message": "make our engagement celebration\ncomplete and meaningful!"
+  },
+  "familyGroups": [
+    {
+      "side": "Groom",
+      "heading": "Parth's Family",
+      "members": ["Kanubhai J Prajapati", "Ramilaben K Prajapati"]
+    },
+    {
+      "side": "Bride",
+      "heading": "Janvi's Family",
+      "members": ["Nareshbhai K Prajapati", "Ritaben N Prajapati"]
+    }
+  ],
+  "venue": {
+    "name": "Umiya Garden Party Plot",
+    "address": "Umiya Garden Party Plot, Gujarat",
+    "latitude": 23.6884671,
+    "longitude": 72.5520895,
+    "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8",
+    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b8?w=800&h=400&fit=crop"
+  }
+}

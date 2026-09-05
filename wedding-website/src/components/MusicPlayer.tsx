@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { MusicConfig } from '../types/wedding'
+import { publicUrl } from '../utils/publicUrl'
 import { FloralDivider } from './DecorativeElements'
 
 interface MusicPlayerProps {
@@ -103,7 +104,7 @@ export function MusicPlayer({ music }: MusicPlayerProps) {
         )}
       </div>
 
-      <audio ref={audioRef} src={music.audioUrl} preload="metadata" loop />
+      <audio ref={audioRef} src={publicUrl(music.audioUrl)} preload="metadata" loop />
     </section>
   )
 }

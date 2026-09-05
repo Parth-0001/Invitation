@@ -1,4 +1,5 @@
 import type { PersonInfo, SectionLabels } from '../types/wedding'
+import { publicUrl } from '../utils/publicUrl'
 import { FloralDivider } from './DecorativeElements'
 
 interface PersonCardProps {
@@ -12,7 +13,7 @@ function PersonCard({ role, person }: PersonCardProps) {
       {person.photo && (
         <div className="mb-5 overflow-hidden rounded-full border-2 p-1" style={{ borderColor: 'var(--wedding-secondary)' }}>
           <img
-            src={person.photo}
+            src={publicUrl(person.photo)}
             alt={person.name}
             className="h-36 w-36 rounded-full object-cover md:h-40 md:w-40"
             loading="lazy"

@@ -20,7 +20,7 @@ export function HeroSection({ wedding, displayNames, heroDecoration = 'default' 
 
   return (
     <section
-      className={`relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center ${isEngagement ? 'hero-engagement-bg' : ''}`}
+      className={`film-hero-opening relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 py-12 text-center sm:px-6 sm:py-16 ${isEngagement ? 'hero-engagement-bg' : ''}`}
       style={
         isEngagement
           ? undefined
@@ -31,6 +31,7 @@ export function HeroSection({ wedding, displayNames, heroDecoration = 'default' 
       }
     >
       {isEngagement && <EngagementHeroBackdrop />}
+      <div className="film-hero-rays" aria-hidden="true" />
 
       {!isEngagement && (
         <>
@@ -45,70 +46,70 @@ export function HeroSection({ wedding, displayNames, heroDecoration = 'default' 
         </>
       )}
 
-      {isEngagement ? (
-        <div className="relative z-10 mb-4 animate-fade-in-up">
-          <InterlockingRingsHero className="animate-ring-glow mx-auto h-28 w-52 md:h-32 md:w-60" />
-          <div className="mt-2 flex items-center justify-center gap-4">
-            <DiamondSparkle className="h-3 w-3 opacity-70" />
-            <DiamondSparkle className="h-4 w-4" />
-            <DiamondSparkle className="h-3 w-3 opacity-70" />
-          </div>
-        </div>
-      ) : (
-        <FloralTop className="relative z-10 mb-8 w-48 opacity-80" />
-      )}
-
-      <p className="section-label relative z-10 mb-6 animate-fade-in-up opacity-70">
-        {wedding.heroMessage}
-      </p>
-
-      {coupleLines ? (
-        <h1
-          className="hero-couple-names relative z-10 animate-fade-in-up"
-          style={{ animationDelay: '0.2s' }}
-        >
-          <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
-            {coupleLines.first}
-          </span>
-          <span className="hero-couple-names__amp-wrap" aria-hidden="true">
-            <span className="hero-couple-names__amp font-script">&</span>
-          </span>
-          <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
-            {coupleLines.second}
-          </span>
-        </h1>
-      ) : (
-        <h1
-          className="font-script relative z-10 animate-fade-in-up text-5xl leading-tight md:text-7xl"
-          style={{
-            color: 'var(--wedding-primary)',
-            animationDelay: '0.2s',
-          }}
-        >
-          {displayNames}
-        </h1>
-      )}
-
-      <div className="relative z-10 my-6 flex items-center gap-3 animate-fade-in-up opacity-80">
-        <div className="decorative-line w-12" />
+      <div className="cinematic-hero-layer relative z-10 flex w-full flex-col items-center">
         {isEngagement ? (
-          <RingDivider className="h-8 w-14" />
+          <div className="mb-4 animate-fade-in-up">
+            <InterlockingRingsHero className="animate-ring-glow mx-auto h-24 w-44 sm:h-28 sm:w-52 md:h-32 md:w-60" />
+            <div className="mt-2 flex items-center justify-center gap-4">
+              <DiamondSparkle className="h-3 w-3 opacity-70" />
+              <DiamondSparkle className="h-4 w-4" />
+              <DiamondSparkle className="h-3 w-3 opacity-70" />
+            </div>
+          </div>
         ) : (
-          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="var(--wedding-accent)" aria-hidden="true">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
+          <FloralTop className="mb-8 w-48 opacity-80" />
         )}
-        <div className="decorative-line w-12" />
+
+        <p className="section-label mb-6 animate-fade-in-up opacity-70">{wedding.heroMessage}</p>
+
+        {coupleLines ? (
+          <h1 className="hero-couple-names animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
+              {coupleLines.first}
+            </span>
+            <span className="hero-couple-names__amp-wrap" aria-hidden="true">
+              <span className="hero-couple-names__amp font-script">&</span>
+            </span>
+            <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
+              {coupleLines.second}
+            </span>
+          </h1>
+        ) : (
+          <h1
+            className="font-script animate-fade-in-up text-5xl leading-tight md:text-7xl"
+            style={{
+              color: 'var(--wedding-primary)',
+              animationDelay: '0.2s',
+            }}
+          >
+            {displayNames}
+          </h1>
+        )}
+
+        <div className="my-6 flex items-center gap-3 animate-fade-in-up opacity-80">
+          <div className="decorative-line w-12" />
+          {isEngagement ? (
+            <RingDivider className="h-8 w-14" />
+          ) : (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="var(--wedding-accent)" aria-hidden="true">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          )}
+          <div className="decorative-line w-12" />
+        </div>
+
+        <p
+          className="hero-scratch-hint section-label animate-fade-in-up px-1 opacity-50"
+          style={{ animationDelay: '0.4s' }}
+        >
+          {wedding.scratchRevealLabel}
+        </p>
       </div>
 
-      <p
-        className="section-label relative z-10 animate-fade-in-up opacity-50"
-        style={{ animationDelay: '0.4s' }}
+      <div
+        className="absolute z-10 animate-pulse-soft opacity-40"
+        style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}
       >
-        {wedding.scratchRevealLabel}
-      </p>
-
-      <div className="absolute bottom-8 z-10 animate-pulse-soft opacity-40">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>

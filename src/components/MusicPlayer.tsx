@@ -1,22 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { MusicConfig } from '../types/wedding'
+import { useMusicPlayback } from '../context/MusicPlaybackContext'
 import { publicUrl } from '../utils/publicUrl'
-import { FloralDivider } from './DecorativeElements'
 
-const PLAY_VOLUME = 0.5
-const SCROLL_PLAY_RATIO = 0.35
-
-interface MusicPlayerProps {
-  music: MusicConfig
-}
-
-export function MusicPlayer({ music }: MusicPlayerProps) {
-  const sectionRef = useRef<HTMLElement>(null)
-  const audioRef = useRef<HTMLAudioElement>(null)
-  const hasAutoStartedRef = useRef(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [loadError, setLoadError] = useState(false)
-  const [autoplayBlocked, setAutoplayBlocked] = useState(false)
+export function MusicPlayer() {
+  const { music, isPlaying, loadError, autoplayBlocked, autoplaySuppressed, togglePlay } = useMusicPlayback()
 
   const coverSrc = music.coverImage
     ? music.coverImage.startsWith('http')
@@ -24,99 +10,10 @@ export function MusicPlayer({ music }: MusicPlayerProps) {
       : publicUrl(music.coverImage)
     : null
 
-  const playAtVolume = useCallback(async () => {
-    const audio = audioRef.current
-    if (!audio || loadError) return false
-
-    audio.volume = PLAY_VOLUME
-    try {
-      await audio.play()
-      setIsPlaying(true)
-      setAutoplayBlocked(false)
-      return true
-    } catch {
-      setAutoplayBlocked(true)
-      setIsPlaying(false)
-      return false
-    }
-  }, [loadError])
-
-  const togglePlay = async () => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    if (isPlaying) {
-      audio.pause()
-      setIsPlaying(false)
-    } else {
-      await playAtVolume()
-    }
-  }
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    audio.volume = PLAY_VOLUME
-
-    const onEnded = () => setIsPlaying(false)
-    const onError = () => setLoadError(true)
-    const onCanPlay = () => setLoadError(false)
-    const onPlay = () => setIsPlaying(true)
-    const onPause = () => setIsPlaying(false)
-
-    audio.addEventListener('ended', onEnded)
-    audio.addEventListener('error', onError)
-    audio.addEventListener('canplaythrough', onCanPlay)
-    audio.addEventListener('play', onPlay)
-    audio.addEventListener('pause', onPause)
-
-    return () => {
-      audio.removeEventListener('ended', onEnded)
-      audio.removeEventListener('error', onError)
-      audio.removeEventListener('canplaythrough', onCanPlay)
-      audio.removeEventListener('play', onPlay)
-      audio.removeEventListener('pause', onPause)
-    }
-  }, [])
-
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        if (!entry || loadError || hasAutoStartedRef.current) return
-
-        if (entry.intersectionRatio >= SCROLL_PLAY_RATIO) {
-          hasAutoStartedRef.current = true
-          void playAtVolume()
-        }
-      },
-      { threshold: [0, SCROLL_PLAY_RATIO, 0.5, 0.75, 1] },
-    )
-
-    observer.observe(section)
-    return () => observer.disconnect()
-  }, [loadError, playAtVolume])
-
   return (
-    <section ref={sectionRef} className="section-padding py-14">
-      <div className="text-center">
-        <p className="section-label mb-2 opacity-60">Soundtrack</p>
-        <h2
-          className="font-heading mb-2 text-2xl font-light tracking-wide md:text-3xl"
-          style={{ color: 'var(--wedding-primary)' }}
-        >
-          {music.sectionHeading ?? 'Music that feels like you'}
-        </h2>
-      </div>
-
-      <FloralDivider />
-
+    <section className="film-section py-8 sm:py-10">
       <div
-        className="music-player-card mx-auto mt-6 flex max-w-md items-center gap-4 p-4 sm:gap-5 sm:p-5"
+        className="music-player-card mx-auto mt-2 flex w-full max-w-md items-center gap-3 p-3.5 sm:mt-6 sm:gap-5 sm:p-5"
         style={{
           backgroundColor: 'color-mix(in srgb, var(--wedding-accent) 6%, var(--wedding-bg))',
           border: '1px solid color-mix(in srgb, var(--wedding-accent) 18%, transparent)',
@@ -152,7 +49,11 @@ export function MusicPlayer({ music }: MusicPlayerProps) {
             <p className="mt-2 text-xs opacity-55">Tap play — your browser may block auto-play until you interact.</p>
           ) : (
             <p className="mt-2 text-xs opacity-45">
-              {isPlaying ? 'Now playing' : 'Starts when you reach this section'}
+              {isPlaying
+                ? 'Now playing'
+                : autoplaySuppressed
+                  ? 'Paused — tap play when you like'
+                  : 'Starts when you scratch or reach the couple'}
             </p>
           )}
         </div>
@@ -161,7 +62,7 @@ export function MusicPlayer({ music }: MusicPlayerProps) {
           type="button"
           onClick={togglePlay}
           disabled={loadError}
-          className="music-player-play flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white transition-transform active:scale-95 disabled:opacity-40 sm:h-14 sm:w-14"
+          className="music-player-play flex h-12 w-12 min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-white transition-transform active:scale-95 disabled:opacity-40 touch-manipulation sm:h-14 sm:w-14"
           style={{ backgroundColor: 'var(--wedding-accent)' }}
           aria-label={isPlaying ? 'Pause music' : 'Play music'}
         >
@@ -177,8 +78,6 @@ export function MusicPlayer({ music }: MusicPlayerProps) {
           )}
         </button>
       </div>
-
-      <audio ref={audioRef} src={publicUrl(music.audioUrl)} preload="auto" loop />
     </section>
   )
 }

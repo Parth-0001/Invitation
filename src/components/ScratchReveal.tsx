@@ -6,13 +6,15 @@ interface ScratchRevealProps {
   revealLabel: string
   revealValue: string
   onRevealed?: () => void
+  /** Fired once on first scratch stroke (user gesture — helps unlock audio). */
+  onScratchStart?: () => void
 }
 
 const REVEAL_THRESHOLD = 0.45
-const BRUSH_RADIUS = 28
+const BRUSH_RADIUS = 32
 const IDLE_AUTO_SCRATCH_MS = 5000
 
-export function ScratchReveal({ label, revealLabel, revealValue, onRevealed }: ScratchRevealProps) {
+export function ScratchReveal({ label, revealLabel, revealValue, onRevealed, onScratchStart }: ScratchRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const isDrawing = useRef(false)
@@ -188,7 +190,10 @@ export function ScratchReveal({ label, revealLabel, revealValue, onRevealed }: S
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    hasScratchedRef.current = true
+    if (!hasScratchedRef.current) {
+      hasScratchedRef.current = true
+      onScratchStart?.()
+    }
     eraseAt(ctx, x, y)
     checkRevealProgress(canvas)
   }
@@ -225,25 +230,25 @@ export function ScratchReveal({ label, revealLabel, revealValue, onRevealed }: S
   }, [initCanvas, clearIdleTimer, stopAutoScratch])
 
   return (
-    <div className="section-padding py-8">
+    <div className="film-scratch-stage w-full">
       <div
         ref={containerRef}
-        className={`scratch-reveal-card relative mx-auto h-36 w-full max-w-sm overflow-visible rounded-2xl shadow-md ${
+        className={`scratch-reveal-card film-scratch-frame relative h-44 w-full max-w-full overflow-visible rounded-2xl shadow-md sm:h-40 ${
           revealed ? 'scratch-reveal-card--celebrate' : ''
         }`}
         style={{ touchAction: 'none' }}
       >
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-2xl transition-transform duration-500 ${
+          className={`absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-2xl px-4 text-center transition-transform duration-500 ${
             revealed ? 'scratch-reveal-card__content--shown' : ''
           }`}
           style={{ backgroundColor: 'var(--wedding-bg)' }}
         >
-          <p className="section-label mb-1" style={{ color: 'var(--wedding-accent)' }}>
+          <p className="section-label mb-1 w-full" style={{ color: 'var(--wedding-accent)' }}>
             {revealLabel}
           </p>
           <p
-            className={`font-script text-3xl md:text-4xl ${revealed ? 'scratch-reveal-date-pop' : ''}`}
+            className={`font-script w-full text-[1.75rem] leading-tight sm:text-3xl md:text-4xl ${revealed ? 'scratch-reveal-date-pop' : ''}`}
             style={{ color: 'var(--wedding-primary)' }}
           >
             {revealValue}
@@ -270,7 +275,7 @@ export function ScratchReveal({ label, revealLabel, revealValue, onRevealed }: S
       </div>
 
       {!revealed && (
-        <p className="mt-3 text-center text-xs tracking-widest opacity-50 animate-pulse-soft">
+        <p className="mt-3 px-1 text-center text-[0.65rem] leading-relaxed tracking-[0.2em] opacity-50 animate-pulse-soft sm:text-xs sm:tracking-widest">
           {label}
         </p>
       )}

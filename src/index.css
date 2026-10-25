@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './cinematic/cinematic.css';
 
 @theme {
   --font-heading: 'Cormorant Garamond', Georgia, serif;
@@ -25,6 +26,9 @@ body {
   color: var(--wedding-text, #3d2b2b);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .font-heading {
@@ -40,8 +44,8 @@ body {
 }
 
 .section-padding {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -51,23 +55,46 @@ body {
   }
 }
 
+/** Film chapters already provide horizontal gutter — avoid nested side padding on phones. */
+.film-section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .wedding-container {
-  max-width: 480px;
+  width: 100%;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.cinematic-mode .wedding-container,
+.cinematic-mode .film-story {
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
   .wedding-container {
     max-width: 520px;
   }
+
+  .cinematic-mode .wedding-container,
+  .cinematic-mode .film-story {
+    max-width: 600px;
+  }
 }
 
 .section-label {
-  letter-spacing: 0.35em;
-  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  font-size: clamp(0.58rem, 2.8vw, 0.65rem);
   font-weight: 500;
   text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .section-label {
+    letter-spacing: 0.35em;
+  }
 }
 
 .decorative-line {
@@ -205,7 +232,23 @@ body {
 }
 
 .hero-couple-names__line {
-  font-size: clamp(3rem, 12vw, 4.25rem);
+  font-size: clamp(2.65rem, 11.5vw, 4.25rem);
+}
+
+.hero-scratch-hint {
+  max-width: 18rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+  line-height: 1.55;
+  letter-spacing: 0.22em;
+}
+
+@media (min-width: 768px) {
+  .hero-scratch-hint {
+    max-width: none;
+    letter-spacing: 0.35em;
+  }
 }
 
 .hero-couple-names__amp-wrap {
@@ -248,8 +291,8 @@ body {
 }
 
 .music-player-disc {
-  width: 5.25rem;
-  height: 5.25rem;
+  width: 4.85rem;
+  height: 4.85rem;
   flex-shrink: 0;
 }
 
@@ -264,6 +307,13 @@ body {
 }
 
 @media (min-width: 380px) {
+  .music-player-disc {
+    width: 5.35rem;
+    height: 5.35rem;
+  }
+}
+
+@media (min-width: 640px) {
   .music-player-disc {
     width: 5.75rem;
     height: 5.75rem;

@@ -1,0 +1,827 @@
+/* Cinematic scroll layer — disable by removing CinematicExperience wrapper */
+
+.cinematic-root {
+  position: relative;
+}
+
+.cinematic-progress {
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  left: 0;
+  z-index: 60;
+  height: 2px;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--cinematic-progress, 0));
+  background: linear-gradient(
+    90deg,
+    var(--wedding-secondary),
+    var(--wedding-primary),
+    var(--wedding-secondary)
+  );
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.cinematic-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: cinematic-grain-shift 0.5s steps(2) infinite;
+}
+
+.cinematic-vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: radial-gradient(
+    ellipse 75% 65% at 50% 45%,
+    transparent 42%,
+    color-mix(in srgb, var(--wedding-text) 22%, transparent) 100%
+  );
+  opacity: 0.35;
+}
+
+@keyframes cinematic-grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-2%, 1%);
+  }
+}
+
+.cinematic-mode .cinematic-hero-layer {
+  will-change: transform, opacity;
+  transform: translate3d(
+      0,
+      calc(var(--cinematic-scroll, 0) * -0.22px),
+      0
+    )
+    scale(calc(1 - var(--cinematic-progress, 0) * 0.06));
+  opacity: calc(1 - var(--cinematic-progress, 0) * 0.45);
+}
+
+.scroll-scene {
+  position: relative;
+}
+
+.scroll-scene__inner {
+  will-change: transform, opacity;
+}
+
+.scroll-scene--panel {
+  min-height: min(88dvh, 780px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scroll-scene--panel .scroll-scene__inner {
+  width: 100%;
+}
+
+.scroll-scene--dramatic {
+  min-height: min(92dvh, 820px);
+  display: flex;
+  align-items: center;
+}
+
+.scroll-scene:not(.scroll-scene--active) .scroll-scene__inner {
+  opacity: 0;
+  transform: translate3d(0, 72px, 0) scale(0.96);
+  filter: blur(6px);
+}
+
+.scroll-scene--slide-left:not(.scroll-scene--active) .scroll-scene__inner {
+  transform: translate3d(-48px, 40px, 0) scale(0.94);
+}
+
+.scroll-scene--slide-right:not(.scroll-scene--active) .scroll-scene__inner {
+  transform: translate3d(48px, 40px, 0) scale(0.94);
+}
+
+.scroll-scene--zoom:not(.scroll-scene--active) .scroll-scene__inner {
+  transform: scale(0.88);
+}
+
+.scroll-scene--rise.scroll-scene--active .scroll-scene__inner,
+.scroll-scene--panel.scroll-scene--active .scroll-scene__inner,
+.scroll-scene--dramatic.scroll-scene--active .scroll-scene__inner {
+  animation: scroll-scene-enter 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-scene--zoom.scroll-scene--active .scroll-scene__inner {
+  animation: scroll-scene-zoom 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-scene--slide-left.scroll-scene--active .scroll-scene__inner {
+  animation: scroll-scene-slide-left 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-scene--slide-right.scroll-scene--active .scroll-scene__inner {
+  animation: scroll-scene-slide-right 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes scroll-scene-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 72px, 0) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes scroll-scene-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes scroll-scene-slide-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-56px, 48px, 0) scale(0.94);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes scroll-scene-slide-right {
+  from {
+    opacity: 0;
+    transform: translate3d(56px, 48px, 0) scale(0.94);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.cinematic-portrait {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.cinematic-portrait__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.12);
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-scene--active .cinematic-portrait__img {
+  transform: scale(1);
+  animation: portrait-kenburns 14s ease-in-out infinite alternate;
+}
+
+@keyframes portrait-kenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(0, -2%, 0);
+  }
+}
+
+.cinematic-event-visual {
+  overflow: hidden;
+}
+
+.cinematic-event-visual img {
+  transform: scale(1.15);
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-scene--active .cinematic-event-visual img {
+  transform: scale(1);
+}
+
+.cinematic-event-card {
+  transform: translate3d(
+    0,
+    calc(max(0, var(--cinematic-scroll, 0) - var(--card-scroll-offset, 0)) * -0.04px),
+    0
+  );
+}
+
+.cinematic-footer {
+  opacity: calc(0.35 + var(--cinematic-progress, 0) * 0.65);
+  transform: translate3d(0, calc((1 - var(--cinematic-progress, 0)) * 24px), 0);
+}
+
+/* —— Film story visual system —— */
+
+.film-story {
+  position: relative;
+}
+
+.film-hero-opening {
+  position: relative;
+}
+
+.film-chapter__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 22rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.film-scratch-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.film-scratch-stage .scratch-reveal-card {
+  width: 100%;
+}
+
+.film-scratch-stage > p {
+  width: 100%;
+  text-align: center;
+}
+
+.film-hero-rays {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    conic-gradient(
+      from 200deg at 50% 20%,
+      transparent 0deg,
+      color-mix(in srgb, var(--wedding-secondary) 14%, transparent) 40deg,
+      transparent 80deg,
+      color-mix(in srgb, var(--wedding-primary) 10%, transparent) 140deg,
+      transparent 220deg
+    );
+  opacity: 0.55;
+  animation: film-rays-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes film-rays-drift {
+  from {
+    transform: scale(1) rotate(-2deg);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(1.08) rotate(3deg);
+    opacity: 0.65;
+  }
+}
+
+.film-chapter {
+  position: relative;
+  padding: 2.75rem 1.25rem 1.5rem;
+  margin: 0 -1.25rem;
+}
+
+.film-chapter:first-of-type {
+  padding-top: 2rem;
+}
+
+.film-chapter--tone-light {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, white 35%, var(--wedding-bg)) 0%,
+    var(--wedding-bg) 45%,
+    color-mix(in srgb, var(--wedding-secondary) 10%, var(--wedding-bg)) 100%
+  );
+}
+
+.film-chapter--tone-cream {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--wedding-secondary) 16%, var(--wedding-bg)) 0%,
+    var(--wedding-bg) 55%,
+    color-mix(in srgb, white 40%, var(--wedding-bg)) 100%
+  );
+}
+
+.film-chapter--tone-gold {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--wedding-secondary) 22%, var(--wedding-bg)) 0%,
+    color-mix(in srgb, var(--wedding-bg) 90%, white) 50%,
+    var(--wedding-bg) 100%
+  );
+}
+
+.film-chapter--tone-wine {
+  background: linear-gradient(
+    175deg,
+    color-mix(in srgb, var(--wedding-primary) 8%, var(--wedding-bg)) 0%,
+    color-mix(in srgb, var(--wedding-primary) 14%, black) 100%
+  );
+  color: color-mix(in srgb, var(--wedding-bg) 92%, white);
+}
+
+.film-chapter--tone-wine .section-label,
+.film-chapter--tone-wine .film-chapter-intro__subtitle {
+  color: color-mix(in srgb, var(--wedding-bg) 75%, var(--wedding-secondary));
+}
+
+.film-chapter--tone-wine .film-chapter-intro__title {
+  color: color-mix(in srgb, white 95%, var(--wedding-secondary));
+}
+
+.film-chapter__ambient {
+  pointer-events: none;
+  position: absolute;
+  inset: 10% 5% auto;
+  height: 45%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--wedding-secondary) 28%, transparent) 0%,
+    transparent 68%
+  );
+  opacity: 0.5;
+  filter: blur(12px);
+}
+
+.film-chapter-intro {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 1.75rem;
+  padding: 0 0.25rem;
+}
+
+.film-chapter-intro__number {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 0.35rem;
+}
+
+.film-chapter-intro__title {
+  font-size: clamp(1.65rem, 5vw, 2.15rem);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--wedding-primary);
+}
+
+.film-chapter-intro__subtitle {
+  margin-top: 0.5rem;
+  opacity: 0.55;
+}
+
+.film-chapter-intro__line {
+  width: 3.5rem;
+  height: 1px;
+  margin: 1rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--wedding-secondary), transparent);
+  opacity: 0.7;
+}
+
+.film-chapter-intro.text-left .film-chapter-intro__line {
+  margin-left: 0;
+}
+
+.film-glass-panel {
+  position: relative;
+  border-radius: 1.35rem;
+  padding: 1.35rem 1.1rem;
+  background: color-mix(in srgb, white 55%, var(--wedding-bg));
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 40%, transparent);
+  box-shadow:
+    0 20px 50px color-mix(in srgb, var(--wedding-accent) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.film-glass-panel--center {
+  text-align: center;
+  padding: 2rem 1.25rem;
+}
+
+.film-countdown-stage {
+  position: relative;
+}
+
+.film-countdown-glow {
+  position: absolute;
+  inset: -15% 5%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--wedding-secondary) 35%, transparent),
+    transparent 70%
+  );
+  filter: blur(20px);
+  animation: film-pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes film-pulse-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.film-countdown-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.film-countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.65rem 0.25rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--wedding-bg) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 30%, transparent);
+}
+
+.film-countdown-unit__value {
+  font-size: clamp(1.65rem, 6vw, 2.35rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--wedding-primary);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--wedding-secondary) 45%, transparent);
+}
+
+.film-countdown-unit__label {
+  margin-top: 0.35rem;
+  font-size: 0.5rem;
+  opacity: 0.55;
+}
+
+.film-couple-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.film-couple-ornament {
+  align-self: center;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--wedding-secondary);
+  text-shadow: 0 0 30px color-mix(in srgb, var(--wedding-secondary) 50%, transparent);
+}
+
+.film-person-card {
+  overflow: hidden;
+  border-radius: 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 35%, transparent);
+  background: color-mix(in srgb, white 40%, var(--wedding-bg));
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--wedding-text) 10%, transparent);
+}
+
+.film-person-card--b {
+  transform: translateX(4%);
+}
+
+.film-person-card--a {
+  transform: translateX(-4%);
+}
+
+.film-person-card__visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 22rem;
+  overflow: hidden;
+}
+
+.film-person-card__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-scene--active .film-person-card__visual img {
+  animation: portrait-kenburns 16s ease-in-out infinite alternate;
+}
+
+.film-person-card__visual-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--wedding-text) 75%, black) 0%, transparent 55%);
+}
+
+.film-person-card__role {
+  position: absolute;
+  left: 1rem;
+  bottom: 3.5rem;
+  color: color-mix(in srgb, white 85%, var(--wedding-secondary));
+  opacity: 0.9;
+}
+
+.film-person-card__name {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  font-size: clamp(2.25rem, 9vw, 3rem);
+  line-height: 1;
+  color: white;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.film-person-card__body {
+  padding: 1.15rem 1.25rem 1.35rem;
+}
+
+.film-event-poster {
+  overflow: hidden;
+  border-radius: 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 30%, transparent);
+  box-shadow: 0 22px 48px color-mix(in srgb, var(--wedding-text) 14%, transparent);
+  background: color-mix(in srgb, var(--wedding-bg) 85%, white);
+}
+
+.film-chapter--tone-wine .film-event-poster {
+  background: color-mix(in srgb, var(--wedding-primary) 25%, black);
+  border-color: color-mix(in srgb, var(--wedding-secondary) 25%, transparent);
+}
+
+.film-event-poster__visual {
+  position: relative;
+  height: 16.5rem;
+}
+
+.film-event-poster__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.film-event-poster__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 55%);
+}
+
+.film-event-poster__headline {
+  position: absolute;
+  left: 1.15rem;
+  right: 1.15rem;
+  bottom: 1rem;
+}
+
+.film-event-poster__body {
+  padding: 1.15rem 1.25rem 1.35rem;
+}
+
+.film-chapter--tone-wine .film-event-poster__body {
+  color: color-mix(in srgb, var(--wedding-bg) 90%, white);
+}
+
+.film-event-poster__copy {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--wedding-secondary) 25%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  opacity: 0.88;
+}
+
+.film-quote-card {
+  position: relative;
+  padding: 2rem 1.5rem 2.25rem;
+  text-align: center;
+  border-radius: 1.25rem;
+  color: color-mix(in srgb, var(--wedding-bg) 95%, white);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--wedding-primary) 88%, black),
+    color-mix(in srgb, var(--wedding-primary) 70%, black)
+  );
+  box-shadow: 0 24px 50px color-mix(in srgb, var(--wedding-primary) 35%, transparent);
+}
+
+.film-quote-card__divider {
+  width: 2.5rem;
+  height: 1px;
+  margin: 1rem auto 1.25rem;
+  background: color-mix(in srgb, var(--wedding-secondary) 70%, white);
+  opacity: 0.6;
+}
+
+.film-quote-card__corner {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-color: color-mix(in srgb, var(--wedding-secondary) 65%, white);
+  border-style: solid;
+  opacity: 0.55;
+}
+
+.film-quote-card__corner--tl {
+  top: 0.85rem;
+  left: 0.85rem;
+  border-width: 1px 0 0 1px;
+}
+
+.film-quote-card__corner--br {
+  right: 0.85rem;
+  bottom: 0.85rem;
+  border-width: 0 1px 1px 0;
+}
+
+.film-scratch-frame {
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 50%, transparent);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--wedding-secondary) 10%, transparent),
+    0 18px 40px color-mix(in srgb, var(--wedding-accent) 18%, transparent);
+}
+
+.film-venue-card {
+  border-radius: 1.35rem;
+  padding: 1.25rem 1.15rem 1.5rem;
+  background: color-mix(in srgb, white 50%, var(--wedding-bg));
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 35%, transparent);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--wedding-text) 8%, transparent);
+}
+
+.film-venue-card__map {
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 25%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, white 40%, transparent);
+}
+
+.film-cta-button {
+  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--wedding-accent),
+    color-mix(in srgb, var(--wedding-primary) 80%, black)
+  );
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--wedding-accent) 35%, transparent);
+}
+
+.film-finale {
+  position: relative;
+  overflow: hidden;
+}
+
+.film-finale__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14rem;
+  height: 14rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 35%, transparent);
+  box-shadow: 0 0 0 12px color-mix(in srgb, var(--wedding-secondary) 8%, transparent);
+  opacity: 0.5;
+}
+
+.scroll-scene--dramatic {
+  min-height: min(94dvh, 860px);
+}
+
+/* —— Mobile-first (primary audience) —— */
+@media (max-width: 767px) {
+  .cinematic-grain {
+    opacity: 0.028;
+    animation: none;
+  }
+
+  .cinematic-vignette {
+    opacity: 0.22;
+  }
+
+  .scroll-scene--panel,
+  .scroll-scene--dramatic {
+    min-height: auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .scroll-scene:not(.scroll-scene--active) .scroll-scene__inner {
+    transform: translate3d(0, 36px, 0) scale(0.98);
+    filter: blur(3px);
+  }
+
+  .film-chapter {
+    padding: 2rem 1rem 1.25rem;
+    margin: 0 -1rem;
+  }
+
+  .film-chapter:first-of-type {
+    padding-top: 1.5rem;
+  }
+
+  .film-chapter-intro__number {
+    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+  }
+
+  .film-chapter-intro__title {
+    font-size: clamp(1.45rem, 6.5vw, 2rem);
+  }
+
+  .film-chapter__content {
+    max-width: min(22rem, 100%);
+  }
+
+  .film-person-card--a,
+  .film-person-card--b {
+    transform: none;
+  }
+
+  .film-person-card__visual {
+    max-height: 18rem;
+  }
+
+  .film-event-poster__visual {
+    height: 14rem;
+  }
+
+  .film-event-poster__headline h3 {
+    font-size: clamp(1.85rem, 8vw, 2.25rem);
+  }
+
+  .film-countdown-grid {
+    gap: 0.35rem;
+  }
+
+  .film-countdown-unit {
+    padding: 0.55rem 0.15rem;
+  }
+
+  .film-glass-panel {
+    padding: 1.1rem 0.75rem;
+  }
+
+  .film-venue-card__map {
+    min-height: 14rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .film-chapter {
+    margin: 0 -1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-grain,
+  .cinematic-vignette,
+  .cinematic-progress {
+    display: none;
+  }
+
+  .scroll-scene:not(.scroll-scene--active) .scroll-scene__inner,
+  .scroll-scene--active .scroll-scene__inner {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+
+  .cinematic-hero-layer {
+    transform: none;
+    opacity: 1;
+  }
+
+  .cinematic-portrait__img {
+    transform: none;
+    animation: none;
+  }
+}

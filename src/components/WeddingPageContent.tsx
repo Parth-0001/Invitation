@@ -60,14 +60,7 @@ function WeddingPageBody({ data }: WeddingPageContentProps) {
         />
       </ScrollScene>
 
-      <ScrollScene
-        variant="dramatic"
-        tone="light"
-        chapter={{
-          title: data.sectionLabels?.coupleTitle ?? 'The Couple',
-          subtitle: data.sectionLabels?.coupleSubtitle ?? 'Introducing',
-        }}
-      >
+      <ScrollScene variant="dramatic" tone="light">
         <MusicPlaybackScrollTrigger>
           <CoupleSection
             groom={data.couple.groom}

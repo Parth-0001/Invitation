@@ -71,6 +71,7 @@
 }
 
 .scroll-scene__inner {
+  width: 100%;
   will-change: transform, opacity;
 }
 
@@ -88,7 +89,13 @@
 .scroll-scene--dramatic {
   min-height: min(92dvh, 820px);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.scroll-scene--dramatic .scroll-scene__inner {
+  width: 100%;
 }
 
 .scroll-scene:not(.scroll-scene--active) .scroll-scene__inner {
@@ -486,18 +493,68 @@
   opacity: 0.55;
 }
 
+.film-couple-intro {
+  margin-bottom: 1.75rem;
+}
+
+.film-couple-intro .film-chapter-intro__line {
+  margin-top: 1rem;
+}
+
+.film-person-card__circle-name {
+  position: static;
+  font-size: clamp(1.75rem, 7.5vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--wedding-primary);
+  text-shadow: none;
+}
+
 .film-couple-stage {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
 }
 
 .film-couple-ornament {
   align-self: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   line-height: 1;
   color: var(--wedding-secondary);
-  text-shadow: 0 0 30px color-mix(in srgb, var(--wedding-secondary) 50%, transparent);
+  opacity: 0.85;
+}
+
+.film-person-card--circle {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 20rem;
+  margin-inline: auto;
+  text-align: center;
+  padding: 1rem 0.85rem 1.1rem;
+  border-radius: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--wedding-secondary) 28%, transparent);
+  background: color-mix(in srgb, white 35%, var(--wedding-bg));
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--wedding-text) 8%, transparent);
+}
+
+.film-person-card__circle-copy,
+.film-person-card__circle-family {
+  max-width: 20rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.film-person-card__portrait {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--wedding-secondary) 24%, transparent);
+}
+
+.film-person-card__portrait .cinematic-portrait__img,
+.scroll-scene--active .film-person-card__portrait .cinematic-portrait__img {
+  transform: scale(1);
+  animation: none;
 }
 
 .film-person-card {
@@ -549,7 +606,7 @@
   opacity: 0.9;
 }
 
-.film-person-card__name {
+.film-person-card__visual .film-person-card__name {
   position: absolute;
   left: 1rem;
   right: 1rem;
@@ -711,6 +768,10 @@
 
 .scroll-scene--dramatic {
   min-height: min(94dvh, 860px);
+}
+
+.scroll-scene--dramatic.film-chapter {
+  min-height: auto;
 }
 
 /* —— Mobile-first (primary audience) —— */

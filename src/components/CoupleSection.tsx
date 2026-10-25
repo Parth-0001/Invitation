@@ -47,32 +47,39 @@ function PersonCard({ role, person }: PersonCardProps) {
   )
 }
 
-function FilmPersonCard({ role, person, index }: PersonCardProps & { index: number }) {
+function FilmPersonCard({ role, person }: PersonCardProps) {
   return (
-    <article className={`film-person-card film-person-card--${index % 2 === 0 ? 'a' : 'b'}`}>
+    <article className="film-person-card film-person-card--circle">
       {person.photo && (
-        <div className="film-person-card__visual">
-          <img src={publicUrl(person.photo)} alt={person.name} loading="lazy" />
-          <div className="film-person-card__visual-shade" />
-          <p className="film-person-card__role section-label">{role}</p>
-          <h3 className="film-person-card__name font-script">{person.name}</h3>
+        <div
+          className="film-person-card__portrait cinematic-portrait mx-auto mb-4 h-36 w-36 border-2 p-1.5 sm:h-40 sm:w-40"
+          style={{ borderColor: 'var(--wedding-secondary)' }}
+        >
+          <img
+            src={publicUrl(person.photo)}
+            alt={person.name}
+            className="cinematic-portrait__img h-full w-full rounded-full object-cover"
+            loading="lazy"
+          />
         </div>
       )}
-      <div className="film-person-card__body">
-        {person.description && (
-          <p className="font-heading text-sm italic leading-relaxed opacity-80">{person.description}</p>
-        )}
-        {person.parents && person.parents.length > 0 && (
-          <div className="mt-4 border-t border-[color-mix(in_srgb,var(--wedding-secondary)_35%,transparent)] pt-4">
-            <p className="section-label mb-2 opacity-45">{person.parentLabel ?? 'Child of'}</p>
-            {person.parents.map((parent) => (
-              <p key={parent} className="font-heading text-sm opacity-85">
-                {parent}
-              </p>
-            ))}
-          </div>
-        )}
-      </div>
+      <h3 className="film-person-card__circle-name font-heading">{person.name}</h3>
+      <p className="section-label mt-2 mb-3 opacity-55">{role}</p>
+      {person.description && (
+        <p className="film-person-card__circle-copy font-heading text-[0.9rem] italic leading-relaxed opacity-75">
+          {person.description}
+        </p>
+      )}
+      {person.parents && person.parents.length > 0 && (
+        <div className="film-person-card__circle-family mt-5 border-t border-[color-mix(in_srgb,var(--wedding-secondary)_30%,transparent)] pt-4">
+          <p className="section-label mb-2 opacity-45">{person.parentLabel ?? 'Child of'}</p>
+          {person.parents.map((parent) => (
+            <p key={parent} className="font-heading text-[0.82rem] leading-snug opacity-85">
+              {parent}
+            </p>
+          ))}
+        </div>
+      )}
     </article>
   )
 }
@@ -87,19 +94,22 @@ interface CoupleSectionProps {
 export function CoupleSection({ groom, bride, labels, presentation = 'film' }: CoupleSectionProps) {
   if (presentation === 'film') {
     return (
-      <section className="film-section pb-4 pt-0 sm:pb-6 sm:pt-2">
+      <section className="film-section w-full pb-4 pt-0 sm:pb-6 sm:pt-2">
+        <header className="film-couple-intro text-center">
+          <p className="section-label mb-2 opacity-60">{labels?.coupleSubtitle ?? 'Introducing'}</p>
+          <h2
+            className="film-chapter-intro__title font-heading"
+            style={{ color: 'var(--wedding-primary)' }}
+          >
+            {labels?.coupleTitle ?? 'The Couple'}
+          </h2>
+          <div className="film-chapter-intro__line" aria-hidden="true" />
+        </header>
+
         <div className="film-couple-stage">
-          <FilmPersonCard
-            index={0}
-            role={labels?.groomRole ?? 'The Groom-to-be'}
-            person={groom}
-          />
+          <FilmPersonCard role={labels?.groomRole ?? 'The Groom-to-be'} person={groom} />
           <div className="film-couple-ornament font-script" aria-hidden="true">&</div>
-          <FilmPersonCard
-            index={1}
-            role={labels?.brideRole ?? 'The Bride-to-be'}
-            person={bride}
-          />
+          <FilmPersonCard role={labels?.brideRole ?? 'The Bride-to-be'} person={bride} />
         </div>
       </section>
     )

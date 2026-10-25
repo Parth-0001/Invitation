@@ -29,5 +29,5 @@ export function MusicPlaybackScrollTrigger({ children }: MusicPlaybackScrollTrig
     return () => observer.disconnect()
   }, [playback])
 
-  return <div ref={rootRef}>{children}</div>
+  return <div ref={rootRef} className="w-full">{children}</div>
 }

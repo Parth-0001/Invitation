@@ -43,7 +43,8 @@ export function ScrollScene({
     if (!node) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
+    const useLiteMotion = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    if (prefersReducedMotion || useLiteMotion) {
       setActive(true)
       return
     }

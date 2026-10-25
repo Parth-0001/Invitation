@@ -28,9 +28,8 @@
   position: fixed;
   inset: 0;
   z-index: 55;
-  opacity: 0.045;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: cinematic-grain-shift 0.5s steps(2) infinite;
 }
 
 .cinematic-vignette {
@@ -46,24 +45,45 @@
   opacity: 0.35;
 }
 
-@keyframes cinematic-grain-shift {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-2%, 1%);
-  }
+/* Phones / reduced motion: skip expensive fixed overlays & parallax */
+.cinematic-lite .cinematic-grain,
+.cinematic-lite .cinematic-vignette {
+  display: none;
 }
 
-.cinematic-mode .cinematic-hero-layer {
-  will-change: transform, opacity;
+.cinematic-lite .film-hero-rays,
+.cinematic-lite .film-chapter__ambient,
+.cinematic-lite .film-countdown-glow {
+  display: none;
+}
+
+.cinematic-lite .film-glass-panel {
+  backdrop-filter: none;
+}
+
+.cinematic-lite .scroll-scene--active .film-person-card__visual img,
+.cinematic-lite .scroll-scene--active .cinematic-portrait__img {
+  animation: none;
+  transform: scale(1);
+}
+
+.cinematic-lite .scroll-scene--rise.scroll-scene--active .scroll-scene__inner,
+.cinematic-lite .scroll-scene--panel.scroll-scene--active .scroll-scene__inner,
+.cinematic-lite .scroll-scene--dramatic.scroll-scene--active .scroll-scene__inner,
+.cinematic-lite .scroll-scene--zoom.scroll-scene--active .scroll-scene__inner,
+.cinematic-lite .scroll-scene--slide-left.scroll-scene--active .scroll-scene__inner,
+.cinematic-lite .scroll-scene--slide-right.scroll-scene--active .scroll-scene__inner {
+  animation-duration: 0.55s;
+}
+
+.cinematic-mode:not(.cinematic-lite) .cinematic-hero-layer {
   transform: translate3d(
       0,
-      calc(var(--cinematic-scroll, 0) * -0.22px),
+      calc(var(--cinematic-scroll, 0) * -0.12px),
       0
     )
-    scale(calc(1 - var(--cinematic-progress, 0) * 0.06));
-  opacity: calc(1 - var(--cinematic-progress, 0) * 0.45);
+    scale(calc(1 - var(--cinematic-progress, 0) * 0.03));
+  opacity: calc(1 - var(--cinematic-progress, 0) * 0.25);
 }
 
 .scroll-scene {
@@ -71,7 +91,7 @@
 }
 
 .scroll-scene__inner {
-  will-change: transform, opacity;
+  contain: layout style;
 }
 
 .scroll-scene--panel {
@@ -93,8 +113,7 @@
 
 .scroll-scene:not(.scroll-scene--active) .scroll-scene__inner {
   opacity: 0;
-  transform: translate3d(0, 72px, 0) scale(0.96);
-  filter: blur(6px);
+  transform: translate3d(0, 40px, 0) scale(0.98);
 }
 
 .scroll-scene--slide-left:not(.scroll-scene--active) .scroll-scene__inner {
@@ -130,52 +149,44 @@
 @keyframes scroll-scene-enter {
   from {
     opacity: 0;
-    transform: translate3d(0, 72px, 0) scale(0.96);
-    filter: blur(6px);
+    transform: translate3d(0, 40px, 0) scale(0.98);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
   }
 }
 
 @keyframes scroll-scene-zoom {
   from {
     opacity: 0;
-    transform: scale(0.82);
-    filter: blur(8px);
+    transform: scale(0.94);
   }
   to {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0);
   }
 }
 
 @keyframes scroll-scene-slide-left {
   from {
     opacity: 0;
-    transform: translate3d(-56px, 48px, 0) scale(0.94);
-    filter: blur(6px);
+    transform: translate3d(-32px, 24px, 0) scale(0.98);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
   }
 }
 
 @keyframes scroll-scene-slide-right {
   from {
     opacity: 0;
-    transform: translate3d(56px, 48px, 0) scale(0.94);
-    filter: blur(6px);
+    transform: translate3d(32px, 24px, 0) scale(0.98);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -715,13 +726,9 @@
 
 /* —— Mobile-first (primary audience) —— */
 @media (max-width: 767px) {
-  .cinematic-grain {
-    opacity: 0.028;
-    animation: none;
-  }
-
+  .cinematic-grain,
   .cinematic-vignette {
-    opacity: 0.22;
+    display: none;
   }
 
   .scroll-scene--panel,
@@ -732,8 +739,7 @@
   }
 
   .scroll-scene:not(.scroll-scene--active) .scroll-scene__inner {
-    transform: translate3d(0, 36px, 0) scale(0.98);
-    filter: blur(3px);
+    transform: translate3d(0, 24px, 0) scale(0.99);
   }
 
   .film-chapter {

@@ -1,4 +1,5 @@
 import type { WeddingData } from '../types/wedding'
+import { splitCoupleDisplayNames } from '../utils/splitCoupleNames'
 import { FloralTop } from './DecorativeElements'
 import {
   EngagementHeroBackdrop,
@@ -15,26 +16,34 @@ interface HeroSectionProps {
 
 export function HeroSection({ wedding, displayNames, heroDecoration = 'default' }: HeroSectionProps) {
   const isEngagement = heroDecoration === 'engagement'
+  const coupleLines = splitCoupleDisplayNames(displayNames)
 
   return (
     <section
-      className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center"
-      style={{
-        background: isEngagement
-          ? `radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--wedding-secondary) 18%, transparent) 0%, transparent 55%), linear-gradient(180deg, var(--wedding-bg) 0%, color-mix(in srgb, var(--wedding-secondary) 12%, var(--wedding-bg)) 100%)`
-          : `linear-gradient(180deg, var(--wedding-bg) 0%, color-mix(in srgb, var(--wedding-secondary) 15%, var(--wedding-bg)) 100%)`,
-      }}
+      className={`relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center ${isEngagement ? 'hero-engagement-bg' : ''}`}
+      style={
+        isEngagement
+          ? undefined
+          : {
+              background:
+                'linear-gradient(180deg, var(--wedding-bg) 0%, color-mix(in srgb, var(--wedding-secondary) 15%, var(--wedding-bg)) 100%)',
+            }
+      }
     >
       {isEngagement && <EngagementHeroBackdrop />}
 
-      <div
-        className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-20"
-        style={{ backgroundColor: 'var(--wedding-accent)' }}
-      />
-      <div
-        className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full opacity-15"
-        style={{ backgroundColor: 'var(--wedding-secondary)' }}
-      />
+      {!isEngagement && (
+        <>
+          <div
+            className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-20"
+            style={{ backgroundColor: 'var(--wedding-accent)' }}
+          />
+          <div
+            className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full opacity-15"
+            style={{ backgroundColor: 'var(--wedding-secondary)' }}
+          />
+        </>
+      )}
 
       {isEngagement ? (
         <div className="relative z-10 mb-4 animate-fade-in-up">
@@ -53,15 +62,32 @@ export function HeroSection({ wedding, displayNames, heroDecoration = 'default' 
         {wedding.heroMessage}
       </p>
 
-      <h1
-        className="font-script relative z-10 animate-fade-in-up text-5xl leading-tight md:text-7xl"
-        style={{
-          color: 'var(--wedding-primary)',
-          animationDelay: '0.2s',
-        }}
-      >
-        {displayNames}
-      </h1>
+      {coupleLines ? (
+        <h1
+          className="hero-couple-names relative z-10 animate-fade-in-up"
+          style={{ animationDelay: '0.2s' }}
+        >
+          <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
+            {coupleLines.first}
+          </span>
+          <span className="hero-couple-names__amp-wrap" aria-hidden="true">
+            <span className="hero-couple-names__amp font-script">&</span>
+          </span>
+          <span className="font-script hero-couple-names__line" style={{ color: 'var(--wedding-primary)' }}>
+            {coupleLines.second}
+          </span>
+        </h1>
+      ) : (
+        <h1
+          className="font-script relative z-10 animate-fade-in-up text-5xl leading-tight md:text-7xl"
+          style={{
+            color: 'var(--wedding-primary)',
+            animationDelay: '0.2s',
+          }}
+        >
+          {displayNames}
+        </h1>
+      )}
 
       <div className="relative z-10 my-6 flex items-center gap-3 animate-fade-in-up opacity-80">
         <div className="decorative-line w-12" />

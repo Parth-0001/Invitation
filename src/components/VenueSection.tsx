@@ -1,5 +1,6 @@
 import type { VenueInfo } from '../types/wedding'
 import { getGoogleMapsEmbedUrl, getGoogleMapsUrl } from '../hooks/useTheme'
+import { publicUrl } from '../utils/publicUrl'
 import { VENUE_MAP_SECTION_ID } from '../utils/scrollToVenue'
 import { FloralDivider } from './DecorativeElements'
 
@@ -30,7 +31,18 @@ export function VenueSection({ venue }: VenueSectionProps) {
 
       <FloralDivider />
 
-      <div className="py-6 text-center">
+      {venue.image && (
+        <div className="mb-6 overflow-hidden rounded-2xl shadow-sm">
+          <img
+            src={publicUrl(venue.image)}
+            alt={venue.name}
+            className="h-48 w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
+
+      <div className="pb-6 text-center">
         <h3
           className="font-script mb-3 text-3xl"
           style={{ color: 'var(--wedding-primary)' }}
@@ -41,17 +53,6 @@ export function VenueSection({ venue }: VenueSectionProps) {
           📍 {venue.address}
         </p>
       </div>
-
-      {venue.image && (
-        <div className="mb-6 overflow-hidden rounded-2xl">
-          <img
-            src={venue.image}
-            alt={venue.name}
-            className="h-44 w-full object-cover"
-            loading="lazy"
-          />
-        </div>
-      )}
 
       <div id={VENUE_MAP_SECTION_ID} className="scroll-mt-6">
         {embedUrl && (

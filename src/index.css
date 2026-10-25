@@ -154,3 +154,294 @@ body {
 .animate-ring-glow {
   animation: pulse-soft 3s ease-in-out infinite;
 }
+
+.hero-engagement-bg {
+  isolation: isolate;
+  background: linear-gradient(
+    168deg,
+    color-mix(in srgb, var(--wedding-primary) 5%, white) 0%,
+    var(--wedding-bg) 32%,
+    color-mix(in srgb, var(--wedding-secondary) 14%, var(--wedding-bg)) 72%,
+    color-mix(in srgb, var(--wedding-primary) 8%, var(--wedding-bg)) 100%
+  );
+}
+
+.hero-engagement-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% 8%, color-mix(in srgb, var(--wedding-secondary) 38%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 0% 85%, color-mix(in srgb, var(--wedding-accent) 16%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 100% 78%, color-mix(in srgb, var(--wedding-secondary) 22%, transparent) 0%, transparent 48%),
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--wedding-secondary) 12%, transparent) 0%, transparent 38%);
+}
+
+.hero-engagement-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--wedding-accent) 22%, transparent) 0.55px,
+    transparent 0.55px
+  );
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 15%, transparent 72%);
+}
+
+.hero-couple-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.hero-couple-names__line {
+  font-size: clamp(3rem, 12vw, 4.25rem);
+}
+
+.hero-couple-names__amp-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  width: min(100%, 15rem);
+  margin: 0.45rem 0 0.35rem;
+}
+
+.hero-couple-names__amp-wrap::before,
+.hero-couple-names__amp-wrap::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  max-width: 3.5rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--wedding-secondary) 70%, var(--wedding-accent)) 50%,
+    transparent
+  );
+  opacity: 0.65;
+}
+
+.hero-couple-names__amp {
+  flex-shrink: 0;
+  font-size: clamp(2.25rem, 8vw, 3rem);
+  line-height: 1;
+  color: var(--wedding-secondary);
+  text-shadow: 0 1px 0 color-mix(in srgb, white 40%, transparent);
+}
+
+.music-player-card {
+  border-radius: 1.15rem;
+  box-shadow:
+    0 16px 36px color-mix(in srgb, var(--wedding-accent) 10%, transparent),
+    0 2px 8px color-mix(in srgb, var(--wedding-text) 6%, transparent);
+}
+
+.music-player-disc {
+  width: 5.25rem;
+  height: 5.25rem;
+  flex-shrink: 0;
+}
+
+.music-player-disc__spinner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.music-player-disc__spinner--active {
+  animation: music-disc-spin 4.5s linear infinite;
+}
+
+@media (min-width: 380px) {
+  .music-player-disc {
+    width: 5.75rem;
+    height: 5.75rem;
+  }
+}
+
+.music-player-disc__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--wedding-text) 88%, black) 0%,
+    color-mix(in srgb, var(--wedding-text) 70%, black) 55%,
+    color-mix(in srgb, var(--wedding-text) 92%, black) 100%
+  );
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, white 12%, transparent),
+    0 4px 14px color-mix(in srgb, var(--wedding-text) 22%, transparent);
+}
+
+.music-player-disc__label {
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, white 25%, transparent);
+}
+
+.music-player-disc__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.music-player-disc__hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: 11%;
+  height: 11%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--wedding-bg);
+  border: 1px solid color-mix(in srgb, var(--wedding-text) 35%, transparent);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--wedding-text) 25%, transparent);
+}
+
+@keyframes music-disc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.music-player-play {
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--wedding-accent) 30%, transparent);
+}
+
+.scratch-reveal-card--celebrate {
+  animation: scratch-card-glow 0.9s ease-out;
+}
+
+.scratch-reveal-card__content--shown {
+  transform: scale(1);
+}
+
+.scratch-reveal-date-pop {
+  animation: scratch-date-pop 0.65s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes scratch-card-glow {
+  0% {
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--wedding-accent) 15%, transparent);
+  }
+  40% {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--wedding-secondary) 35%, transparent),
+      0 12px 32px color-mix(in srgb, var(--wedding-accent) 28%, transparent);
+  }
+  100% {
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--wedding-accent) 15%, transparent);
+  }
+}
+
+@keyframes scratch-date-pop {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.reveal-celebration {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: visible;
+}
+
+.reveal-celebration__confetti {
+  position: absolute;
+  inset: -10% -5% auto;
+  height: 120%;
+  overflow: visible;
+}
+
+.reveal-celebration__piece {
+  position: absolute;
+  top: -8%;
+  border-radius: 1px;
+  opacity: 0;
+  animation-name: reveal-confetti-fall;
+  animation-timing-function: cubic-bezier(0.25, 0.75, 0.4, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes reveal-confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-drift, 0px), 220px, 0) rotate(540deg);
+  }
+}
+
+.reveal-celebration__sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--wedding-secondary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--wedding-secondary) 80%, transparent);
+  animation: reveal-sparkle-pop 0.9s ease-out both;
+}
+
+@keyframes reveal-sparkle-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+.reveal-celebration__flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--wedding-secondary) 35%, transparent) 0%,
+    transparent 65%
+  );
+  animation: reveal-flash 0.7s ease-out both;
+  opacity: 0;
+}
+
+@keyframes reveal-flash {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}

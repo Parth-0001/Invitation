@@ -66,30 +66,6 @@
       "latitude": 23.6884671,
       "longitude": 72.5520895,
       "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
-    },
-    {
-      "id": "ring-exchange",
-      "name": "Ring Exchange & Blessings",
-      "date": "14 November 2026",
-      "time": "7:00 PM onwards",
-      "venue": "Umiya Garden Party Plot",
-      "description": "With hearts full of promise, we exchange rings — a timeless symbol of our commitment and the journey we begin together.",
-      "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=400&fit=crop",
-      "latitude": 23.6884671,
-      "longitude": 72.5520895,
-      "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
-    },
-    {
-      "id": "engagement-dinner",
-      "name": "Engagement Dinner",
-      "date": "14 November 2026",
-      "time": "7:00 PM onwards",
-      "venue": "Umiya Garden Party Plot",
-      "description": "Join us for a delightful dinner as we celebrate this cherished occasion surrounded by the love of family and friends.",
-      "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=400&fit=crop",
-      "latitude": 23.6884671,
-      "longitude": 72.5520895,
-      "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
     }
   ],
   "gallery": {
@@ -101,31 +77,18 @@
     "title": "Chaand Baliya",
     "artist": "Aditya A",
     "audioUrl": "/music/chaand-baliya.mp3",
-    "coverImage": "https://images.unsplash.com/photo-1532767153582-b2a127ee635b?w=200&h=200&fit=crop"
+    "coverImage": "/photos/Chaand-Baaliyan image.jpg"
   },
   "invitationMessage": {
     "heading": "Awaiting Your Noble Presence",
     "scriptHeading": "Because your blessings",
     "message": "make our engagement celebration\ncomplete and meaningful!"
   },
-  "familyGroups": [
-    {
-      "side": "Groom",
-      "heading": "Parth's Family",
-      "members": ["Kanubhai J Prajapati", "Ramilaben K Prajapati"]
-    },
-    {
-      "side": "Bride",
-      "heading": "Janvi's Family",
-      "members": ["Nareshbhai K Prajapati", "Ritaben N Prajapati"]
-    }
-  ],
   "venue": {
     "name": "Umiya Garden Party Plot",
     "address": "Umiya Garden Party Plot, Gujarat",
     "latitude": 23.6884671,
     "longitude": 72.5520895,
-    "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8",
-    "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b8?w=800&h=400&fit=crop"
+    "googleMapsUrl": "https://maps.app.goo.gl/odB12jXWpoYqFP4p8"
   }
 }

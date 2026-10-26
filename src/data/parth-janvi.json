@@ -74,10 +74,8 @@
   },
   "music": {
     "sectionHeading": "Music that feels like us",
-    "title": "Chaand Baliya",
-    "artist": "Aditya A",
-    "audioUrl": "/music/chaand-baliya.mp3",
-    "coverImage": "/photos/Chaand-Baaliyan image.jpg"
+    "title": "Dhoon Lagi",
+    "audioUrl": "/music/Dhoon-lagi.mp3"
   },
   "invitationMessage": {
     "heading": "Awaiting Your Noble Presence",

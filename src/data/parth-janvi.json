@@ -75,7 +75,9 @@
   "music": {
     "sectionHeading": "Music that feels like us",
     "title": "Tum Se",
-    "audioUrl": "/music/Tum-Se.mp3"
+    "artist": "Varun Jain, Raghav Chaitanya, Sachin-Jigar",
+    "audioUrl": "/music/Tum-Se.mp3",
+    "coverImage": "/photos/Tum-se_image.png"
   },
   "invitationMessage": {
     "heading": "Awaiting Your Noble Presence",
